@@ -1,0 +1,334 @@
+@import "tailwindcss";
+
+:root {
+  --bg-primary: #141414;
+  --bg-secondary: #181818;
+  --bg-card: #2f2f2f;
+  --bg-card-hover: #3d3d3d;
+  --bg-glass: rgba(20, 20, 20, 0.92);
+  --border: rgba(255, 255, 255, 0.1);
+  --border-bright: rgba(255, 255, 255, 0.25);
+  --accent-primary: #e50914;
+  --accent-secondary: #b81d24;
+  --accent-pink: #e50914;
+  --accent-green: #46d369;
+  --accent-orange: #f5c518;
+  --text-primary: #ffffff;
+  --text-secondary: #b3b3b3;
+  --text-muted: #808080;
+}
+
+*:focus-visible {
+  outline: 2px solid var(--accent-primary);
+  outline-offset: 2px;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Netflix Shelf Horizontal Scrollbar */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(229, 9, 20, 0.4); border-radius: 99px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(229, 9, 20, 0.8); }
+
+.shelf-row {
+  display: flex;
+  gap: 16px;
+  overflow-x: auto;
+  padding-bottom: 12px;
+  scroll-snap-type: x mandatory;
+}
+.shelf-row::-webkit-scrollbar {
+  height: 4px;
+}
+
+/* Glass effect */
+.glass {
+  background: var(--bg-glass);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--border);
+}
+
+.glass-strong {
+  background: rgba(20, 20, 20, 0.96);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid var(--border-bright);
+}
+
+/* Card hover animation */
+.card-hover {
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+.card-hover:hover {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.8);
+  border-color: rgba(229, 9, 20, 0.4);
+}
+
+/* Glow effects */
+.glow-red {
+  box-shadow: 0 0 20px rgba(229, 9, 20, 0.3);
+}
+.glow-green {
+  box-shadow: 0 0 20px rgba(70, 211, 105, 0.3);
+}
+
+/* Gradient text */
+.gradient-text {
+  background: linear-gradient(135deg, #ffffff, #b3b3b3);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.gradient-text-red {
+  background: linear-gradient(135deg, #e50914, #ff4545);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Progress bar */
+.progress-bar {
+  height: 3px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 99px;
+  overflow: hidden;
+}
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #e50914, #b81d24);
+  border-radius: 99px;
+  transition: width 0.5s ease;
+}
+
+/* Shimmer loading */
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+.shimmer {
+  background: linear-gradient(90deg, #181818 25%, #282828 50%, #181818 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+/* Smooth modal */
+@keyframes modalIn {
+  from { opacity: 0; transform: scale(0.96) translateY(-8px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+.modal-enter { animation: modalIn 0.25s ease forwards; }
+
+/* Pulse dot */
+@keyframes pulseDot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(0.85); }
+}
+.pulse-dot { animation: pulseDot 2s ease-in-out infinite; }
+
+/* Badge variants */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+}
+.badge-anime { background: rgba(229, 9, 20, 0.15); color: #ff5757; border: 1px solid rgba(229, 9, 20, 0.3); }
+.badge-movie { background: rgba(59, 130, 246, 0.15); color: #93c5fd; border: 1px solid rgba(59, 130, 246, 0.3); }
+.badge-series { background: rgba(70, 211, 105, 0.15); color: #46d369; border: 1px solid rgba(70, 211, 105, 0.3); }
+.badge-watching { background: rgba(70, 211, 105, 0.15); color: #46d369; border: 1px solid rgba(70, 211, 105, 0.3); }
+.badge-completed { background: rgba(59, 130, 246, 0.15); color: #60a5fa; border: 1px solid rgba(59, 130, 246, 0.3); }
+.badge-dropped { background: rgba(239, 68, 68, 0.15); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.3); }
+.badge-plan { background: rgba(255, 255, 255, 0.1); color: var(--text-secondary); border: 1px solid rgba(255, 255, 255, 0.15); }
+
+/* Button styles */
+.btn-primary {
+  background: var(--accent-primary);
+  color: white;
+  border: none;
+  padding: 8px 18px;
+  border-radius: 4px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.15s ease, transform 0.1s ease;
+}
+.btn-primary:hover { background: var(--accent-secondary); transform: translateY(-1px); }
+.btn-primary:active { transform: translateY(0); }
+
+.btn-ghost {
+  background: rgba(109, 109, 110, 0.5);
+  color: var(--text-primary);
+  border: none;
+  padding: 8px 18px;
+  border-radius: 4px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.btn-ghost:hover { background: rgba(109, 109, 110, 0.7); }
+
+/* Input style */
+.input-dark {
+  background: rgba(0, 0, 0, 0.6);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text-primary);
+  padding: 10px 14px;
+  width: 100%;
+  outline: none;
+  transition: border-color 0.2s;
+  font-size: 14px;
+}
+.input-dark:focus { border-color: var(--accent-primary); }
+.input-dark::placeholder { color: var(--text-muted); }
+
+/* Poster image */
+.poster-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+.poster-wrap:hover .poster-img { transform: scale(1.05); }
+
+/* Nav active */
+.nav-active {
+  color: var(--accent-primary) !important;
+  background: rgba(229, 9, 20, 0.15) !important;
+}
+
+/* Stat card */
+.stat-card {
+  position: relative;
+  background: var(--bg-secondary);
+  border-radius: 8px;
+  border: 1px solid var(--border);
+}
+
+/* Overlay gradient for poster cards */
+.poster-overlay {
+  background: linear-gradient(to top, rgba(20, 20, 20, 0.98) 0%, rgba(20, 20, 20, 0.6) 50%, transparent 100%);
+}
+
+/* Tag/chip */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 10px;
+  border-radius: 4px;
+  font-size: 11px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+
+/* Platform badge colors */
+.platform-netflix { background: rgba(229, 9, 20, 0.15); color: #ff5757; border-color: rgba(229, 9, 20, 0.3); }
+.platform-disney { background: rgba(59, 130, 246, 0.15); color: #93c5fd; border-color: rgba(59, 130, 246, 0.3); }
+.platform-prime { background: rgba(14, 165, 233, 0.15); color: #38bdf8; border-color: rgba(14, 165, 233, 0.3); }
+.platform-crunchyroll { background: rgba(249, 115, 22, 0.15); color: #fdba74; border-color: rgba(249, 115, 22, 0.3); }
+.platform-bilibili { background: rgba(6, 182, 212, 0.15); color: #67e8f9; border-color: rgba(6, 182, 212, 0.3); }
+
+/* Star rating */
+.star-filled { color: var(--accent-orange); }
+.star-empty { color: #3d3d3d; }
+
+/* Animations */
+@keyframes slideIn {
+  from { transform: translateX(-20px); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+.slide-in { animation: slideIn 0.3s ease forwards; }
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+.fade-in { animation: fadeIn 0.4s ease forwards; }
+
+/* Episode count badge */
+.ep-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: rgba(0, 0, 0, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 4px;
+  padding: 2px 8px;
+  font-size: 12px;
+  font-weight: 700;
+  color: white;
+  backdrop-filter: blur(8px);
+}
+
+/* Quick action buttons (episode +/-) */
+.ep-btn {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(0, 0, 0, 0.6);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  font-size: 14px;
+  line-height: 1;
+}
+.ep-btn:hover { background: var(--accent-primary); border-color: var(--accent-primary); transform: scale(1.1); }
+.ep-btn:active { transform: scale(0.95); }
+
+/* Resume button */
+.resume-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--accent-primary);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 16px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.resume-btn:hover { background: var(--accent-secondary); transform: translateY(-1px); }
+
+/* Notification dot */
+.notif-dot {
+  position: absolute;
+  top: -2px;
+  right: -2px;
+  width: 8px;
+  height: 8px;
+  background: var(--accent-primary);
+  border-radius: 50%;
+  border: 2px solid var(--bg-primary);
+}
